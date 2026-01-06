@@ -22,7 +22,7 @@ file {
     java_package: "com.google.protobuf"
     java_outer_classname: "TimestampProto"
     java_multiple_files: true
-    go_package: "github.com/golang/protobuf/ptypes/timestamp"
+    go_package: "types"
     cc_enable_arenas: true
     objc_class_prefix: "GPB"
     csharp_namespace: "Google.Protobuf.WellKnownTypes"
@@ -53,7 +53,7 @@ file {
     java_package: "com.google.protobuf"
     java_outer_classname: "DurationProto"
     java_multiple_files: true
-    go_package: "github.com/golang/protobuf/ptypes/duration"
+    go_package: "types"
     cc_enable_arenas: true
     objc_class_prefix: "GPB"
     csharp_namespace: "Google.Protobuf.WellKnownTypes"
@@ -157,7 +157,7 @@ file {
     java_package: "com.google.protobuf"
     java_outer_classname: "WrappersProto"
     java_multiple_files: true
-    go_package: "github.com/golang/protobuf/ptypes/wrappers"
+    go_package: "types"
     cc_enable_arenas: true
     objc_class_prefix: "GPB"
     csharp_namespace: "Google.Protobuf.WellKnownTypes"
@@ -932,10 +932,6 @@ file {
       start: 1000
       end: 536870912
     }
-    reserved_range {
-      start: 38
-      end: 39
-    }
   }
   message_type {
     name: "MessageOptions"
@@ -981,14 +977,6 @@ file {
     extension_range {
       start: 1000
       end: 536870912
-    }
-    reserved_range {
-      start: 8
-      end: 9
-    }
-    reserved_range {
-      start: 9
-      end: 10
     }
   }
   message_type {
@@ -1084,10 +1072,6 @@ file {
       start: 1000
       end: 536870912
     }
-    reserved_range {
-      start: 4
-      end: 5
-    }
   }
   message_type {
     name: "OneofOptions"
@@ -1132,10 +1116,6 @@ file {
     extension_range {
       start: 1000
       end: 536870912
-    }
-    reserved_range {
-      start: 5
-      end: 6
     }
   }
   message_type {
@@ -1405,7 +1385,7 @@ file {
     java_package: "com.google.protobuf"
     java_outer_classname: "DescriptorProtos"
     optimize_for: SPEED
-    go_package: "github.com/golang/protobuf/protoc-gen-go/descriptor;descriptor"
+    go_package: "descriptor"
     cc_enable_arenas: true
     objc_class_prefix: "GPB"
     csharp_namespace: "Google.Protobuf.Reflection"
@@ -2775,8 +2755,8 @@ file {
         label: LABEL_OPTIONAL
         type: TYPE_UINT32
         options {
-          65003: "os.FileMode"
           65001: 0
+          65003: "os.FileMode"
         }
         json_name: "mode"
       }
@@ -2944,8 +2924,8 @@ file {
       type: TYPE_MESSAGE
       type_name: ".google.protobuf.Duration"
       options {
-        65011: 1
         65001: 0
+        65011: 1
       }
       json_name: "delay"
     }
@@ -3388,8 +3368,8 @@ file {
         }
       }
       options {
-        62023: "PublishMode"
         62001: 0
+        62023: "PublishMode"
       }
     }
   }
@@ -4095,8 +4075,8 @@ file {
       label: LABEL_OPTIONAL
       type: TYPE_UINT32
       options {
-        65003: "os.FileMode"
         65001: 0
+        65003: "os.FileMode"
       }
       json_name: "mode"
     }
@@ -5178,8 +5158,8 @@ file {
       }
     }
     options {
-      62023: "NodeRole"
       62001: 0
+      62023: "NodeRole"
     }
   }
   syntax: "proto3"
@@ -5208,7 +5188,7 @@ file {
     java_package: "com.google.protobuf"
     java_outer_classname: "AnyProto"
     java_multiple_files: true
-    go_package: "github.com/golang/protobuf/ptypes/any"
+    go_package: "types"
     objc_class_prefix: "GPB"
     csharp_namespace: "Google.Protobuf.WellKnownTypes"
   }
@@ -5809,6 +5789,13 @@ file {
       label: LABEL_OPTIONAL
       type: TYPE_INT64
       json_name: "oomScoreAdj"
+    }
+    field {
+      name: "runtime"
+      number: 31
+      label: LABEL_OPTIONAL
+      type: TYPE_STRING
+      json_name: "runtime"
     }
     nested_type {
       name: "LabelsEntry"
@@ -9896,8 +9883,8 @@ file {
       type: TYPE_MESSAGE
       type_name: ".google.protobuf.Duration"
       options {
-        65011: 1
         65001: 0
+        65011: 1
       }
       json_name: "period"
     }
@@ -10590,7 +10577,7 @@ file {
   syntax: "proto3"
 }
 file {
-  name: "go.etcd.io/etcd/raft/v3/raftpb/raft.proto"
+  name: "go.etcd.io/raft/v3/raftpb/raft.proto"
   package: "raftpb"
   dependency: "gogoproto/gogo.proto"
   message_type {
@@ -10774,13 +10761,23 @@ file {
       json_name: "commit"
     }
     field {
+      name: "vote"
+      number: 13
+      label: LABEL_OPTIONAL
+      type: TYPE_UINT64
+      options {
+        65001: 0
+      }
+      json_name: "vote"
+    }
+    field {
       name: "snapshot"
       number: 9
       label: LABEL_OPTIONAL
       type: TYPE_MESSAGE
       type_name: ".raftpb.Snapshot"
       options {
-        65001: 0
+        65001: 1
       }
       json_name: "snapshot"
     }
@@ -10809,7 +10806,21 @@ file {
       number: 12
       label: LABEL_OPTIONAL
       type: TYPE_BYTES
+      options {
+        65001: 1
+      }
       json_name: "context"
+    }
+    field {
+      name: "responses"
+      number: 14
+      label: LABEL_REPEATED
+      type: TYPE_MESSAGE
+      type_name: ".raftpb.Message"
+      options {
+        65001: 0
+      }
+      json_name: "responses"
     }
   }
   message_type {
@@ -11079,6 +11090,26 @@ file {
       name: "MsgPreVoteResp"
       number: 18
     }
+    value {
+      name: "MsgStorageAppend"
+      number: 19
+    }
+    value {
+      name: "MsgStorageAppendResp"
+      number: 20
+    }
+    value {
+      name: "MsgStorageApply"
+      number: 21
+    }
+    value {
+      name: "MsgStorageApplyResp"
+      number: 22
+    }
+    value {
+      name: "MsgForgetLeader"
+      number: 23
+    }
   }
   enum_type {
     name: "ConfChangeTransition"
@@ -11115,14 +11146,14 @@ file {
     }
   }
   options {
-    63017: 1
-    63020: 1
-    63018: 1
     63001: 0
     63002: 0
-    63035: 0
+    63017: 1
+    63018: 1
+    63020: 1
     63026: 0
     63034: 0
+    63035: 0
   }
 }
 file {
@@ -11130,7 +11161,7 @@ file {
   package: "docker.swarmkit.v1"
   dependency: "github.com/docker/swarmkit/api/objects.proto"
   dependency: "github.com/docker/swarmkit/api/types.proto"
-  dependency: "go.etcd.io/etcd/raft/v3/raftpb/raft.proto"
+  dependency: "go.etcd.io/raft/v3/raftpb/raft.proto"
   dependency: "gogoproto/gogo.proto"
   dependency: "github.com/docker/swarmkit/protobuf/plugin/plugin.proto"
   message_type {
