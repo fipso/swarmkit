@@ -377,6 +377,8 @@ message ContainerSpec {
 	int64 oom_score_adj = 30;
 	// Runtime specifies the OCI runtime to use for the container (e.g., "runc", "runsc" for gVisor).
 	string runtime = 31;
+	// Privileged gives the container full access to the host.
+	bool privileged = 32;
 }
 
 // EndpointSpec defines the properties that can be configured to

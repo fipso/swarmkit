@@ -880,6 +880,8 @@ type ContainerSpec struct {
 	OomScoreAdj int64 `protobuf:"varint,30,opt,name=oom_score_adj,json=oomScoreAdj,proto3" json:"oom_score_adj,omitempty"`
 	// Runtime specifies the OCI runtime to use for the container (e.g., "runc", "runsc" for gVisor).
 	Runtime string `protobuf:"bytes,31,opt,name=runtime,proto3" json:"runtime,omitempty"`
+	// Privileged gives the container full access to the host.
+	Privileged bool `protobuf:"varint,32,opt,name=privileged,proto3" json:"privileged,omitempty"`
 }
 
 func (m *ContainerSpec) Reset()      { *m = ContainerSpec{} }
@@ -910,6 +912,13 @@ func (m *ContainerSpec) XXX_Size() int {
 }
 func (m *ContainerSpec) XXX_DiscardUnknown() {
 	xxx_messageInfo_ContainerSpec.DiscardUnknown(m)
+}
+
+func (m *ContainerSpec) GetPrivileged() bool {
+	if m != nil {
+		return m.Privileged
+	}
+	return false
 }
 
 var xxx_messageInfo_ContainerSpec proto.InternalMessageInfo
