@@ -2852,6 +2852,18 @@ func (m *ContainerSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Privileged {
+		i--
+		if m.Privileged {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0x80
+	}
 	if len(m.Runtime) > 0 {
 		i -= len(m.Runtime)
 		copy(dAtA[i:], m.Runtime)
@@ -4249,6 +4261,9 @@ func (m *ContainerSpec) Size() (n int) {
 	l = len(m.Runtime)
 	if l > 0 {
 		n += 2 + l + sovSpecs(uint64(l))
+	}
+	if m.Privileged {
+		n += 3
 	}
 	return n
 }
@@ -7568,6 +7583,26 @@ func (m *ContainerSpec) Unmarshal(dAtA []byte) error {
 			}
 			m.Runtime = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 32:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Privileged", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpecs
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Privileged = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipSpecs(dAtA[iNdEx:])
